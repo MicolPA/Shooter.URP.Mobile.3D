@@ -14,7 +14,8 @@ namespace FPS.Player
         public bool IsDead { get; private set; }
 
         public event Action<PlayerHealth> OnDeath;
-
+        public event Action<float> OnDamaged;
+        
         [Header("Audio")]
         [SerializeField] private AudioManager audioManager;
 
@@ -24,30 +25,25 @@ namespace FPS.Player
             if (audioManager == null)
                 audioManager = FindFirstObjectByType<AudioManager>();
 
-                if (audioManager == null)
-            {
-                Debug.LogError(
-                    "PlayerHealth no encontró ningún AudioManager en la escena.",
-                    this
-                );
-            }
         }
 
         public void TakeDamage(float damage)
         {
-            if (IsDead)
+            if (IsDead || damage <= 0f)
                 return;
 
-            CurrentHealth -= damage;
+            CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
 
             audioManager?.PlayPlayerDamage();
 
-            Debug.Log($"Player recibió {damage} de daño. Vida: {CurrentHealth}");
+            OnDamaged?.Invoke(damage);
+
+            Debug.Log(
+                $"Player recibió {damage} de daño. Vida: {CurrentHealth}"
+            );
 
             if (CurrentHealth <= 0f)
-            {
                 Die();
-            }
         }
 
         public void Heal(float amount)

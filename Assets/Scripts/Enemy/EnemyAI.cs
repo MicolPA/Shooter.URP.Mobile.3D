@@ -72,10 +72,13 @@ namespace FPS.Enemies
                 return;
             }
 
-            float distanceToTarget = Vector3.Distance(
-                transform.position,
-                target.position
-            );
+            Vector3 directionToTarget =
+            target.position - transform.position;
+
+        directionToTarget.y = 0f;
+
+        float distanceToTarget =
+            directionToTarget.magnitude;
 
             if (distanceToTarget <= attackRange)
             {

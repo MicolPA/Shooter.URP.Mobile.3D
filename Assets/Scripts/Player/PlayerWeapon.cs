@@ -114,10 +114,6 @@ namespace FPS.Weapons
                 hit.collider.GetComponentInParent<IDamageable>();
 
             damageable?.TakeDamage(damage);
-
-            Debug.Log(
-                $"Impacto en: {hit.collider.name} | Punto: {hit.point}"
-            );
         }
 
         private void HandleReloadInput()

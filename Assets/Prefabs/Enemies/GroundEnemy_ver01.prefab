@@ -18,11 +18,11 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 109a1d449bd83724dbd5cbee30b5c4b9, type: 2}
     - target: {fileID: 4806567848785046099, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: attackRange
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4806567848785046099, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: attackDamage
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5991268061884363106, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: m_LocalPosition.x

@@ -16,7 +16,7 @@ MonoBehaviour:
   groundEnemyVer01Count: 4
   groundEnemyVer02Prefab: {fileID: 5001133872651143683, guid: 240e8ce7194489942a8b60548bced2d6, type: 3}
   groundEnemyVer02Count: 1
-  flyingEnemyPrefab: {fileID: 0}
-  flyingEnemyCount: 0
-  spawnInterval: 1
+  flyingEnemyPrefab: {fileID: 5787285091626232750, guid: ee832930ffc61914aab52c9818e45d49, type: 3}
+  flyingEnemyCount: 3
+  spawnInterval: 3
   delayBeforeNextWave: 5

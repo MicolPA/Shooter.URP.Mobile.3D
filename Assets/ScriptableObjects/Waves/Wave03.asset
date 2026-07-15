@@ -18,5 +18,5 @@ MonoBehaviour:
   groundEnemyVer02Count: 4
   flyingEnemyPrefab: {fileID: 0}
   flyingEnemyCount: 0
-  spawnInterval: 1
+  spawnInterval: 3
   delayBeforeNextWave: 5
