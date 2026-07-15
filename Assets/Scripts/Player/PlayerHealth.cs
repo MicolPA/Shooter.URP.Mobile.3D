@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using FPS.Audio;
 
 namespace FPS.Player
 {
@@ -14,9 +15,22 @@ namespace FPS.Player
 
         public event Action<PlayerHealth> OnDeath;
 
+        [Header("Audio")]
+        [SerializeField] private AudioManager audioManager;
+
         private void Awake()
         {
             CurrentHealth = maxHealth;
+            if (audioManager == null)
+                audioManager = FindFirstObjectByType<AudioManager>();
+
+                if (audioManager == null)
+            {
+                Debug.LogError(
+                    "PlayerHealth no encontró ningún AudioManager en la escena.",
+                    this
+                );
+            }
         }
 
         public void TakeDamage(float damage)
@@ -25,6 +39,8 @@ namespace FPS.Player
                 return;
 
             CurrentHealth -= damage;
+
+            audioManager?.PlayPlayerDamage();
 
             Debug.Log($"Player recibió {damage} de daño. Vida: {CurrentHealth}");
 

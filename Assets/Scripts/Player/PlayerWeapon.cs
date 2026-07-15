@@ -2,6 +2,7 @@ using System.Collections;
 using FPS.Core;
 using FPS.Input;
 using UnityEngine;
+using FPS.Audio;
 
 namespace FPS.Weapons
 {
@@ -31,6 +32,9 @@ namespace FPS.Weapons
         public int CurrentAmmo => currentAmmo;
         public int ReserveAmmo => reserveAmmo;
         public bool IsReloading => isReloading;
+
+        [Header("Audio")]
+        [SerializeField] private AudioManager audioManager;
 
         private void Awake()
         {
@@ -81,6 +85,8 @@ namespace FPS.Weapons
         {
             nextFireTime = Time.time + 1f / fireRate;
             currentAmmo--;
+            
+            audioManager?.PlayGunshot();
 
             Ray ray = new Ray(
                 playerCamera.transform.position,
@@ -137,6 +143,8 @@ namespace FPS.Weapons
         private IEnumerator ReloadRoutine()
         {
             isReloading = true;
+
+            audioManager?.PlayReload();
 
             Debug.Log("Recargando...");
 

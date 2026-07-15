@@ -1,3 +1,4 @@
+using FPS.Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,10 +17,12 @@ namespace FPS.Enemies
         [SerializeField, Min(0.1f)] private float attackCooldown = 1f;
 
         [Header("Navigation")]
-        [SerializeField, Min(0.02f)] private float destinationUpdateInterval = 0.15f;
+        [SerializeField, Min(0.02f)]
+        private float destinationUpdateInterval = 0.15f;
 
         private NavMeshAgent agent;
-        private EnemyHealth health;
+        private EnemyHealth enemyHealth;
+        private PlayerHealth targetHealth;
 
         private float nextAttackTime;
         private float nextDestinationUpdateTime;
@@ -27,18 +30,12 @@ namespace FPS.Enemies
         private void Awake()
         {
             agent = GetComponent<NavMeshAgent>();
-            health = GetComponent<EnemyHealth>();
+            enemyHealth = GetComponent<EnemyHealth>();
         }
 
         private void Start()
         {
-            if (target == null)
-            {
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-                if (player != null)
-                    target = player.transform;
-            }
+            FindTarget();
 
             if (target == null)
             {
@@ -48,13 +45,32 @@ namespace FPS.Enemies
                 );
 
                 enabled = false;
+                return;
+            }
+
+            targetHealth = target.GetComponent<PlayerHealth>();
+
+            if (targetHealth == null)
+            {
+                Debug.LogError(
+                    $"{name} encontró al Player, pero no encontró PlayerHealth.",
+                    target
+                );
+
+                enabled = false;
             }
         }
 
         private void Update()
         {
-            if (health.IsDead || target == null)
+            if (enemyHealth.IsDead || target == null)
                 return;
+
+            if (targetHealth == null || targetHealth.IsDead)
+            {
+                StopAgent();
+                return;
+            }
 
             float distanceToTarget = Vector3.Distance(
                 transform.position,
@@ -64,14 +80,29 @@ namespace FPS.Enemies
             if (distanceToTarget <= attackRange)
             {
                 StopAndAttack();
-                return;
             }
+            else
+            {
+                ChaseTarget();
+            }
+        }
 
-            ChaseTarget();
+        private void FindTarget()
+        {
+            if (target != null)
+                return;
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+            if (player != null)
+                target = player.transform;
         }
 
         private void ChaseTarget()
         {
+            if (!agent.isOnNavMesh)
+                return;
+
             agent.isStopped = false;
 
             if (Time.time < nextDestinationUpdateTime)
@@ -85,18 +116,31 @@ namespace FPS.Enemies
 
         private void StopAndAttack()
         {
-            agent.isStopped = true;
-
+            StopAgent();
             FaceTarget();
+
+            if (targetHealth == null || targetHealth.IsDead)
+                return;
 
             if (Time.time < nextAttackTime)
                 return;
 
             nextAttackTime = Time.time + attackCooldown;
 
+            targetHealth.TakeDamage(attackDamage);
+
             Debug.Log(
                 $"{name} atacó al jugador e hizo {attackDamage} de daño."
             );
+        }
+
+        private void StopAgent()
+        {
+            if (!agent.isOnNavMesh)
+                return;
+
+            agent.isStopped = true;
+            agent.ResetPath();
         }
 
         private void FaceTarget()

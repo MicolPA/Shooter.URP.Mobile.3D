@@ -1,6 +1,7 @@
 using System;
 using FPS.Core;
 using UnityEngine;
+using FPS.Audio;
 
 namespace FPS.Enemies
 {
@@ -17,9 +18,15 @@ namespace FPS.Enemies
 
         public event Action<EnemyHealth> OnDeath;
 
+        [Header("Audio")]
+        [SerializeField] private AudioManager audioManager;
+
         private void Awake()
         {
             CurrentHealth = maxHealth;
+            
+            if (audioManager == null)
+                audioManager = FindFirstObjectByType<AudioManager>();
         }
 
         public void TakeDamage(float damage)
@@ -28,6 +35,8 @@ namespace FPS.Enemies
                 return;
 
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
+
+            audioManager?.PlayEnemyDamage();
 
             Debug.Log(
                 $"{name} recibió {damage} de daño. Vida: {CurrentHealth}"
@@ -44,6 +53,8 @@ namespace FPS.Enemies
 
             IsDead = true;
 
+            audioManager?.PlayEnemyDeath();
+            
             OnDeath?.Invoke(this);
 
             SpawnDeathEffect();
