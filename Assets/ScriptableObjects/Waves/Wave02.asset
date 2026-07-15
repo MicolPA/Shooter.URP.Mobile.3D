@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef824c45906677c4b9f68e1898a5f680, type: 3}
+  m_Name: Wave02
+  m_EditorClassIdentifier: Assembly-CSharp::WaveData
+  groundEnemyVer01Prefab: {fileID: 6136292714489842984, guid: 728111712f9135e4586952a79f3fff4a, type: 3}
+  groundEnemyVer01Count: 6
+  groundEnemyVer02Prefab: {fileID: 5001133872651143683, guid: 240e8ce7194489942a8b60548bced2d6, type: 3}
+  groundEnemyVer02Count: 2
+  flyingEnemyPrefab: {fileID: 0}
+  flyingEnemyCount: 0
+  spawnInterval: 1
+  delayBeforeNextWave: 5

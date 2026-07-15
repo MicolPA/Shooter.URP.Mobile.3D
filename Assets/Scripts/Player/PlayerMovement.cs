@@ -14,7 +14,7 @@ namespace FPS.Player
         [SerializeField, Min(0f)] private float deceleration = 16f;
 
         [Header("Jump")]
-        [SerializeField, Min(0f)] private float jumpHeight = 1.5f;
+        [SerializeField, Min(0f)] private float jumpHeight = 2f;
 
         [Header("Gravity")]
         [SerializeField] private float gravity = -20f;
