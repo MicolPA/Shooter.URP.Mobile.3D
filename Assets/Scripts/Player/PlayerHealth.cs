@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using FPS.Audio;
+using FPS.UI;
 
 namespace FPS.Player
 {
@@ -15,6 +16,8 @@ namespace FPS.Player
 
         public event Action<PlayerHealth> OnDeath;
         public event Action<float> OnDamaged;
+
+        public float MaxHealth => maxHealth;
         
         [Header("Audio")]
         [SerializeField] private AudioManager audioManager;
@@ -22,6 +25,8 @@ namespace FPS.Player
         private void Awake()
         {
             CurrentHealth = maxHealth;
+            UIManager.Instance?.UpdateHealth(CurrentHealth, maxHealth);
+
             if (audioManager == null)
                 audioManager = FindFirstObjectByType<AudioManager>();
 
@@ -33,6 +38,7 @@ namespace FPS.Player
                 return;
 
             CurrentHealth = Mathf.Max(CurrentHealth - damage, 0f);
+            UIManager.Instance?.UpdateHealth(CurrentHealth, maxHealth);
 
             audioManager?.PlayPlayerDamage();
 
@@ -54,10 +60,14 @@ namespace FPS.Player
             CurrentHealth = Mathf.Min(
                 CurrentHealth + amount,
                 maxHealth);
+            UIManager.Instance?.UpdateHealth(CurrentHealth, maxHealth);
         }
 
         private void Die()
         {
+            if (IsDead)
+                return;
+
             IsDead = true;
 
             Debug.Log("Player murió.");

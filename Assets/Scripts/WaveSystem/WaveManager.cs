@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using FPS.Enemies;
 using UnityEngine;
+using FPS.UI;
 
 namespace FPS.Waves
 {
@@ -45,7 +46,15 @@ namespace FPS.Waves
 
         private IEnumerator RunWavesRoutine()
         {
-            yield return new WaitForSeconds(initialDelay);
+            if (initialDelay > 0f)
+            {
+                UIManager.Instance?.ShowWaveAnnouncement(
+                    1,
+                    Mathf.Max(0f, initialDelay - 1f)
+                );
+
+                yield return new WaitForSeconds(initialDelay);
+            }
 
             for (int waveIndex = 0; waveIndex < waves.Length; waveIndex++)
             {
@@ -54,20 +63,44 @@ namespace FPS.Waves
                 CurrentWaveNumber = waveIndex + 1;
                 IsWaveRunning = true;
 
-                Debug.Log($"Comienza la oleada {CurrentWaveNumber}.");
+                UIManager.Instance?.UpdateWave(CurrentWaveNumber);
+                UIManager.Instance?.UpdateEnemiesRemaining(
+                    aliveEnemies.Count
+                );
 
-                yield return StartCoroutine(SpawnWaveRoutine(currentWave));
+                Debug.Log(
+                    $"Comienza la oleada {CurrentWaveNumber}."
+                );
 
-                yield return new WaitUntil(() => aliveEnemies.Count == 0);
+                yield return StartCoroutine(
+                    SpawnWaveRoutine(currentWave)
+                );
+
+                yield return new WaitUntil(
+                    () => aliveEnemies.Count == 0
+                );
 
                 IsWaveRunning = false;
 
-                Debug.Log($"Oleada {CurrentWaveNumber} completada.");
+                Debug.Log(
+                    $"Oleada {CurrentWaveNumber} completada."
+                );
 
-                bool isLastWave = waveIndex >= waves.Length - 1;
+                bool isLastWave =
+                    waveIndex >= waves.Length - 1;
 
                 if (!isLastWave)
                 {
+                    int nextWaveNumber = CurrentWaveNumber + 1;
+
+                    UIManager.Instance?.ShowWaveAnnouncement(
+                        nextWaveNumber,
+                        Mathf.Max(
+                            0f,
+                            currentWave.DelayBeforeNextWave - 1f
+                        )
+                    );
+
                     yield return new WaitForSeconds(
                         currentWave.DelayBeforeNextWave
                     );
@@ -162,12 +195,16 @@ namespace FPS.Waves
                 return;
 
             enemy.OnDeath += HandleEnemyDeath;
+
+            UIManager.Instance?.UpdateEnemiesRemaining(aliveEnemies.Count);
         }
 
         private void HandleEnemyDeath(EnemyHealth enemy)
         {
             enemy.OnDeath -= HandleEnemyDeath;
             aliveEnemies.Remove(enemy);
+
+            UIManager.Instance?.UpdateEnemiesRemaining(aliveEnemies.Count);
 
             Debug.Log(
                 $"Enemigo eliminado. Quedan {aliveEnemies.Count} enemigos vivos."

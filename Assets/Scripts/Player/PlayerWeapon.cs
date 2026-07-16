@@ -3,6 +3,7 @@ using FPS.Core;
 using FPS.Input;
 using UnityEngine;
 using FPS.Audio;
+using FPS.UI;
 
 namespace FPS.Weapons
 {
@@ -19,7 +20,7 @@ namespace FPS.Weapons
         [SerializeField] private LayerMask hitLayers = ~0;
 
         [Header("Ammunition")]
-        [SerializeField, Min(1)] private int magazineSize = 30;
+        [SerializeField, Min(1)] private int magazineSize = 20;
         [SerializeField, Min(0)] private int reserveAmmo = 120;
         [SerializeField, Min(0f)] private float reloadDuration = 1.5f;
 
@@ -40,6 +41,8 @@ namespace FPS.Weapons
         {
             inputReader = GetComponent<InputReader>();
             currentAmmo = magazineSize;
+
+            UIManager.Instance?.UpdateAmmo(currentAmmo, reserveAmmo);
 
             if (playerCamera == null)
             {
@@ -94,7 +97,9 @@ namespace FPS.Weapons
         {
             nextFireTime = Time.time + 1f / fireRate;
             currentAmmo--;
-            
+
+            UIManager.Instance?.UpdateAmmo(currentAmmo, reserveAmmo);
+
             audioManager?.PlayGunshot();
 
             Ray ray = new Ray(
@@ -166,6 +171,8 @@ namespace FPS.Weapons
 
             currentAmmo += ammoToLoad;
             reserveAmmo -= ammoToLoad;
+
+            UIManager.Instance?.UpdateAmmo(currentAmmo, reserveAmmo);
 
             isReloading = false;
 
