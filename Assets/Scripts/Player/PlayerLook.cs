@@ -9,8 +9,9 @@ namespace FPS.Player
         [Header("References")]
         [SerializeField] private Transform cameraPivot;
 
-        [Header("Mouse Settings")]
+        [Header("Sensitivity")]
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.12f;
+        [SerializeField, Min(0f)] private float joystickSensitivity = 150f;
 
         [Header("Vertical Rotation")]
         [SerializeField] private float minimumPitch = -85f;
@@ -37,8 +38,7 @@ namespace FPS.Player
 
         private void Start()
         {
-            if (lockCursorOnStart)
-                SetCursorLocked(true);
+            ApplyCursorState();
         }
 
         private void Update()
@@ -53,21 +53,62 @@ namespace FPS.Player
 
             Vector2 lookInput = inputReader.LookInput;
 
-            float yawDelta = lookInput.x * mouseSensitivity;
-            float pitchDelta = lookInput.y * mouseSensitivity;
+            float yawDelta;
+            float pitchDelta;
+
+            if (inputReader.IsMobileMode)
+            {
+                yawDelta =
+                    lookInput.x *
+                    joystickSensitivity *
+                    Time.deltaTime;
+
+                pitchDelta =
+                    lookInput.y *
+                    joystickSensitivity *
+                    Time.deltaTime;
+            }
+            else if (inputReader.IsLookInputFromMouse)
+            {
+                yawDelta = lookInput.x * mouseSensitivity;
+                pitchDelta = lookInput.y * mouseSensitivity;
+            }
+            else
+            {
+                yawDelta =
+                    lookInput.x *
+                    joystickSensitivity *
+                    Time.deltaTime;
+
+                pitchDelta =
+                    lookInput.y *
+                    joystickSensitivity *
+                    Time.deltaTime;
+            }
 
             transform.Rotate(Vector3.up * yawDelta);
 
             pitch -= pitchDelta;
-            pitch = Mathf.Clamp(pitch, minimumPitch, maximumPitch);
+            pitch = Mathf.Clamp(
+                pitch,
+                minimumPitch,
+                maximumPitch
+            );
 
-            cameraPivot.localRotation = Quaternion.Euler(pitch, 0f, 0f);
+            cameraPivot.localRotation =
+                Quaternion.Euler(pitch, 0f, 0f);
         }
 
         private void OnApplicationFocus(bool hasFocus)
         {
-            if (hasFocus && lockCursorOnStart)
-                SetCursorLocked(true);
+            if (hasFocus)
+                ApplyCursorState();
+        }
+
+        private void ApplyCursorState()
+        {
+            bool shouldLock = lockCursorOnStart && !inputReader.IsMobileMode;
+            SetCursorLocked(shouldLock);
         }
 
         private static void SetCursorLocked(bool isLocked)

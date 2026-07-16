@@ -58,8 +58,17 @@ namespace FPS.Weapons
 
         private void HandleFireInput()
         {
-            if (!inputReader.IsFiring)
+            if (!inputReader.ConsumeFire())
                 return;
+
+            if (isReloading)
+                return;
+
+            if (currentAmmo <= 0)
+            {
+                TryStartReload();
+                return;
+            }
 
             if (!CanFire())
                 return;
@@ -118,12 +127,18 @@ namespace FPS.Weapons
 
         private void HandleReloadInput()
         {
-            if (inputReader.ConsumeReload())
-                TryStartReload();
+            if (!inputReader.ConsumeReload())
+                return;
+
+            TryStartReload();
         }
 
         private void TryStartReload()
         {
+            Debug.Log(
+                $"Intentando recargar. Munición actual: {currentAmmo}, reserva: {reserveAmmo}"
+            );
+
             if (isReloading)
                 return;
 

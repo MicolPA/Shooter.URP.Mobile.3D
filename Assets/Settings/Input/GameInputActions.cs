@@ -337,6 +337,17 @@ namespace FPS.Input
                 },
                 {
                     ""name"": """",
+                    ""id"": ""568be2f3-500c-4ff9-b863-4aed9dacf1a1"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Fire"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""54e0dca5-cc2a-44b4-97e4-4ae48fa32764"",
                     ""path"": ""<Keyboard>/r"",
                     ""interactions"": """",
