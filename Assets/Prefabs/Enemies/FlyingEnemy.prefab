@@ -515,7 +515,7 @@ MonoBehaviour:
   rotationSpeed: 360
   preferredHeight: 1.5
   attackRange: 2.5
-  attackDamage: 30
+  attackDamage: 15
   attackCooldown: 1
 --- !u!1 &5917304660040409274
 GameObject:

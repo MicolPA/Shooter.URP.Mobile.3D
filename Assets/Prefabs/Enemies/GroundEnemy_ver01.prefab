@@ -477,13 +477,17 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 109a1d449bd83724dbd5cbee30b5c4b9, type: 2}
+    - target: {fileID: 1241030976847736317, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
+      propertyPath: deathEffect
+      value: 
+      objectReference: {fileID: 4611324928608762348, guid: 2d4a3e51ee8e2504985a7a7b4f1f1e33, type: 3}
     - target: {fileID: 4806567848785046099, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: attackRange
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4806567848785046099, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: attackDamage
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5991268061884363106, guid: 1a59d97f0a77dba4e9fad5a80ff312e6, type: 3}
       propertyPath: m_LocalPosition.x

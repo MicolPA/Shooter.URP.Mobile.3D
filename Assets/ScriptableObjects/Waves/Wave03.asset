@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Wave03
   m_EditorClassIdentifier: Assembly-CSharp::WaveData
   groundEnemyVer01Prefab: {fileID: 6136292714489842984, guid: 728111712f9135e4586952a79f3fff4a, type: 3}
-  groundEnemyVer01Count: 10
+  groundEnemyVer01Count: 12
   groundEnemyVer02Prefab: {fileID: 5001133872651143683, guid: 240e8ce7194489942a8b60548bced2d6, type: 3}
-  groundEnemyVer02Count: 4
-  flyingEnemyPrefab: {fileID: 0}
-  flyingEnemyCount: 0
-  spawnInterval: 3
+  groundEnemyVer02Count: 6
+  flyingEnemyPrefab: {fileID: 5787285091626232750, guid: ee832930ffc61914aab52c9818e45d49, type: 3}
+  flyingEnemyCount: 5
+  spawnInterval: 2
   delayBeforeNextWave: 5
