@@ -15,15 +15,15 @@ RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 10
   m_Fog: 1
-  m_FogColor: {r: 0.27058825, g: 0.04705883, b: 0.4156863, a: 1}
+  m_FogColor: {r: 0.12074891, g: 0.048024215, b: 0.3584906, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.027
+  m_FogDensity: 0.022
   m_LinearFogStart: 6.15
   m_LinearFogEnd: 100
   m_AmbientSkyColor: {r: 0.101960786, g: 0.08627451, b: 0.21960784, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.36
+  m_AmbientIntensity: 0.85
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: cc421da483ed06c49933077a621bff25, type: 2}
@@ -4343,8 +4343,8 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 1
-  m_Color: {r: 0.91872823, g: 0.2627451, b: 0.98039216, a: 1}
-  m_Intensity: 0.5
+  m_Color: {r: 0.9849881, g: 0.8283019, b: 1, a: 1}
+  m_Intensity: 0.98
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -4794,7 +4794,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.00000023841858, y: 0, z: 0}
 --- !u!23 &471423173
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -18550,7 +18550,7 @@ MonoBehaviour:
   hitLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  magazineSize: 20
+  magazineSize: 12
   reserveAmmo: 120
   reloadDuration: 1.5
   audioManager: {fileID: 1206923423}
@@ -19132,6 +19132,7 @@ MonoBehaviour:
   backgroundMusic: {fileID: 8300000, guid: dde6dc4a5d050c34d85070d6cdb973f2, type: 3}
   gunshotClip: {fileID: 8300000, guid: d7a3e02c8e124a043b4d00845c0a2dc2, type: 3}
   reloadClip: {fileID: 8300000, guid: fd6d96721629e7142b022e212d056b8d, type: 3}
+  outOfAmmoClip: {fileID: 8300000, guid: fc560f3dde650dc47a58fd192d52df6c, type: 3}
   playerDamageClip: {fileID: 8300000, guid: 685a724c46429e64a93fbcd2627346fc, type: 3}
   enemyDamageClip: {fileID: 0}
   enemyDeathClip: {fileID: 8300000, guid: 5cb57db76d985754bae1fdb3a3fdf77f, type: 3}

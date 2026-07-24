@@ -14,6 +14,7 @@ namespace FPS.Audio
         [Header("Player SFX")]
         [SerializeField] private AudioClip gunshotClip;
         [SerializeField] private AudioClip reloadClip;
+        [SerializeField] private AudioClip outOfAmmoClip;
         [SerializeField] private AudioClip playerDamageClip;
 
         [Header("Enemy SFX")]
@@ -33,6 +34,11 @@ namespace FPS.Audio
         public void PlayReload()
         {
             PlaySFX(reloadClip);
+        }
+
+        public void PlayOutOfAmmo()
+        {
+            PlaySFX(outOfAmmoClip);
         }
 
         public void PlayPlayerDamage()

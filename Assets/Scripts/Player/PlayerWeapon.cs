@@ -69,7 +69,7 @@ namespace FPS.Weapons
 
             if (currentAmmo <= 0)
             {
-                TryStartReload();
+                audioManager?.PlayOutOfAmmo();
                 return;
             }
 
@@ -85,10 +85,7 @@ namespace FPS.Weapons
                 return false;
 
             if (currentAmmo <= 0)
-            {
-                TryStartReload();
                 return false;
-            }
 
             return Time.time >= nextFireTime;
         }

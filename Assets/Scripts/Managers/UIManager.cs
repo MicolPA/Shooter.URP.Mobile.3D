@@ -15,6 +15,8 @@ namespace FPS.UI
         [SerializeField] private TMP_Text enemiesText;
         [SerializeField] private TMP_Text ammoText;
 
+        private int totalEnemiesInWave;
+
         [Header("Wave Announcement")]
         [SerializeField] private CanvasGroup waveAnnouncementGroup;
         [SerializeField] private TMP_Text waveAnnouncementText;
@@ -60,10 +62,15 @@ namespace FPS.UI
                 waveText.text = $"Wave {wave}";
         }
 
-        public void UpdateEnemiesRemaining(int amount)
+        public void SetTotalEnemiesInWave(int total)
+        {
+            totalEnemiesInWave = total;
+        }
+
+        public void UpdateEnemiesRemaining(int aliveCount)
         {
             if (enemiesText != null)
-                enemiesText.text = $"Enemies: {amount}";
+                enemiesText.text = $"Enemies: {aliveCount}";
         }
 
         public void ShowWaveAnnouncement(int waveNumber, float visibleDuration)

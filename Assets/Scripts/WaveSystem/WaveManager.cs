@@ -24,6 +24,7 @@ namespace FPS.Waves
         public bool AllWavesCompleted { get; private set; }
 
         private readonly HashSet<EnemyHealth> aliveEnemies = new();
+        private int enemiesRemainingInWave;
 
         private Coroutine waveRoutine;
 
@@ -64,8 +65,11 @@ namespace FPS.Waves
                 IsWaveRunning = true;
 
                 UIManager.Instance?.UpdateWave(CurrentWaveNumber);
+                UIManager.Instance?.SetTotalEnemiesInWave(currentWave.TotalEnemyCount);
+                
+                enemiesRemainingInWave = currentWave.TotalEnemyCount;
                 UIManager.Instance?.UpdateEnemiesRemaining(
-                    aliveEnemies.Count
+                    enemiesRemainingInWave
                 );
 
                 Debug.Log(
@@ -195,16 +199,15 @@ namespace FPS.Waves
                 return;
 
             enemy.OnDeath += HandleEnemyDeath;
-
-            UIManager.Instance?.UpdateEnemiesRemaining(aliveEnemies.Count);
         }
 
         private void HandleEnemyDeath(EnemyHealth enemy)
         {
             enemy.OnDeath -= HandleEnemyDeath;
             aliveEnemies.Remove(enemy);
+            enemiesRemainingInWave--;
 
-            UIManager.Instance?.UpdateEnemiesRemaining(aliveEnemies.Count);
+            UIManager.Instance?.UpdateEnemiesRemaining(enemiesRemainingInWave);
 
             Debug.Log(
                 $"Enemigo eliminado. Quedan {aliveEnemies.Count} enemigos vivos."
